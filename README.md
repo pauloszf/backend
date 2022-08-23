@@ -19,7 +19,7 @@ Para utilizar o app é necessário um data-source dentro do diretório shared/ty
 
         password: 'senha-da-database',
 
-        database: 'npme-da-database',
+        database: 'nome-da-database',
 
         synchronize: true,
 
