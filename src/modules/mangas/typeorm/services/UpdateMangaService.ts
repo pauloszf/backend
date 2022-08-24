@@ -10,30 +10,28 @@ interface IRequest {
 }
 
 class UpdateMangaService {
-  public async execute({id, mangaName, cap}: IRequest) {
-    await AppDataSource.transaction (async (manager) : Promise<Manga> => {
-      const mangasRepository = manager.withRepository(MangaRepository);
+  public async execute({id, mangaName, cap}: IRequest): Promise<Manga>{
+    const manga = await AppDataSource
+    .createQueryBuilder(Manga, 'manga')
+    .where("manga.id = :id", {id})
+    .getOne();
 
-      const manga = await mangasRepository.findByName(id);
+    if(!manga) {
+      throw new AppError('Manga não encontrado');
+    }
 
-      if(!manga) {
-        throw new AppError('Manga não encontrado');
-      }
+    const mangaExists = await MangaRepository.findByName(mangaName);
 
-      const mangaExists = await mangasRepository.findByName(mangaName);
-
-      if(mangaExists && mangaName !== manga.mangaName) {
+    if(mangaExists && mangaName !== manga.mangaName) {
         throw new AppError('There is alredy one manga with this name');
-      }
+    }
 
-      manga.mangaName = mangaName;
-      manga.cap = cap;
+    manga.mangaName = mangaName;
+    manga.cap = cap;
 
-      await manager.save(manga);
+    await MangaRepository.save(manga);
 
-      return manga;
-    })
-
+    return(manga);
   }
 }
 
