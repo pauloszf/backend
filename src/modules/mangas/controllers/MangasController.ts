@@ -33,7 +33,6 @@ import UpdateMangaService from "../typeorm/services/UpdateMangaService";
       cap,
     });
 
-    console.log(manga);
     return response.json(manga);
   }
 

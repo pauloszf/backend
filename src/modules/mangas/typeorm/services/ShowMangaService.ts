@@ -8,18 +8,17 @@ interface IRequest {
 }
 
 class ShowMangaService {
-  public async execute({id}: IRequest) {
-    await AppDataSource.transaction (async (manager) : Promise<Manga | undefined > => {
-      const mangasRepository = manager.withRepository(MangaRepository);
+  public async execute({id}: IRequest) : Promise<Manga | undefined>{
+    const manga = await AppDataSource
+      .createQueryBuilder(Manga, 'manga')
+      .where("manga.id = :id", {id})
+      .getOne();
 
-      const manga = await mangasRepository.findByName(id);
+    if(!manga) {
+      throw new AppError('Manga não encontrado');
+    }
 
-      if(!manga) {
-        throw new AppError('Manga não encontrado');
-      }
-
-      return manga;
-    })
+    return manga;
 
   }
 }

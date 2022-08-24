@@ -5,15 +5,10 @@ import { MangaRepository } from "../repositories/MangaRepository";
 
 
 class ListMangaService {
-  public async execute() {
-    await AppDataSource.transaction (async (manager) : Promise<Manga[]> => {
-      const mangasRepository = manager.withRepository(MangaRepository);
+  public async execute(): Promise<Manga[]>{
+    const manga = await MangaRepository.find();
 
-      const mangas = await mangasRepository.find();
-
-      return mangas;
-    })
-
+    return manga;
   }
 }
 

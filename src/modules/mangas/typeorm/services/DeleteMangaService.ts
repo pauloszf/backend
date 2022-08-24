@@ -1,5 +1,6 @@
 import AppError from "@shared/errors/AppError";
 import { AppDataSource } from "@shared/typeorm/data-source";
+import Manga from "../entities/Manga";
 import { MangaRepository } from "../repositories/MangaRepository";
 
 interface IRequest {
@@ -7,19 +8,17 @@ interface IRequest {
 }
 
 class DeleteMangaService {
-  public async execute({ id }: IRequest) {
-    await AppDataSource.transaction (async (manager) : Promise<void> => {
-      const mangasRepository = manager.withRepository(MangaRepository);
+  public async execute({ id }: IRequest): Promise<void>{
+    const manga = await AppDataSource
+      .createQueryBuilder(Manga, 'manga')
+      .where("manga.id = :id", {id})
+      .getOne();
 
-      const manga = await mangasRepository.findByName(id);
+    if(!manga) {
+      throw new AppError('Manga not found');
+    }
 
-      if(!manga) {
-        throw new AppError('Manga não encontrado');
-      }
-
-      await mangasRepository.remove(manga);
-    })
-
+    await MangaRepository.remove(manga);
   }
 }
 

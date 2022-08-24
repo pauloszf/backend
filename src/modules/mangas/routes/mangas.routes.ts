@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import MangasController from '../controllers/MangasController';
+import ListMangaService from '../typeorm/services/ListMangaService';
 
 const mangasRouter = Router();
 const mangasController = new MangasController();

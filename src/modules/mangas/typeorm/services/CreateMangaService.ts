@@ -9,25 +9,21 @@ interface IRequest {
 }
 
 class CreateMangaService {
-  public async execute({mangaName, cap}: IRequest) {
-    await AppDataSource.transaction (async (manager) : Promise<Manga | undefined> => {
-      const mangasRepository = manager.withRepository(MangaRepository);
-      const mangaExists = await mangasRepository.findByName(mangaName);
+  public async execute({mangaName, cap}: IRequest) : Promise<Manga>{
+    const mangaExists = await MangaRepository.findByName(mangaName);
 
-      if(mangaExists) {
+    if(mangaExists) {
         throw new AppError('There is alredy one manga with this name');
-      }
-      const manga = manager.create(Manga,{
-        mangaName,
-        cap
-      });
+    }
 
-      await manager.save(manga);
+    const manga = MangaRepository.create({
+      mangaName,
+      cap
+    });
 
-      console.log(manga);
-      return manga;
-    })
+    await MangaRepository.save(manga);
 
+    return(manga);
   }
 }
 
