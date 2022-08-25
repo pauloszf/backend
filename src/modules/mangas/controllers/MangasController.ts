@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import CreateMangaService from "../typeorm/services/CreateMangaService";
-import DeleteMangaService from "../typeorm/services/DeleteMangaService";
-import ListMangaService from "../typeorm/services/ListMangaService";
-import ShowMangaService from "../typeorm/services/ShowMangaService";
-import UpdateMangaService from "../typeorm/services/UpdateMangaService";
+import CreateMangaService from "../services/CreateMangaService";
+import DeleteMangaService from "../services/DeleteMangaService";
+import ListMangaService from "../services/ListMangaService";
+import ShowMangaService from "../services/ShowMangaService";
+import UpdateMangaService from "../services/UpdateMangaService";
 
  export default class MangasController {
   public async index(request: Request, response: Response): Promise<Response>{

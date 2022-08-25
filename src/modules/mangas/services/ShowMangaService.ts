@@ -1,7 +1,7 @@
 import AppError from "@shared/errors/AppError";
 import { AppDataSource } from "@shared/typeorm/data-source";
-import Manga from "../entities/Manga";
-import { MangaRepository } from "../repositories/MangaRepository";
+import Manga from "../typeorm/entities/Manga";
+import { MangaRepository } from "../typeorm/repositories/MangaRepository";
 
 interface IRequest {
   id: string;
