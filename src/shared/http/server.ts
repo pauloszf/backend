@@ -6,13 +6,18 @@ import { errors } from 'celebrate';
 import routes from './routes';
 import AppError from '@shared/errors/AppError';
 import { conectarServidorNoBD } from '@config/db';
+import uploadConfig from '@config/upload';
 
 const app = express();
 
 conectarServidorNoBD();
 
 app.use(cors());
+
 app.use(express.json());
+
+//Rota estática para as imagens
+app.use('/files', express.static(uploadConfig.directory));
 
 app.use(routes);
 
