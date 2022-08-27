@@ -38,4 +38,5 @@ Para iniciar a api depois de configurada:
     npm run dev
     
 Para criar uma migration, adicionar o nome dela no lugar de MIGRATION_NAME no arquivo de package.json:
+
     "migration:create": "typeorm-ts-node-commonjs migration:create ./src/shared/typeorm/migrations/MIGRATION_NAME",
