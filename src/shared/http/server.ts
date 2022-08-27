@@ -8,6 +8,7 @@ import AppError from '@shared/errors/AppError';
 import { conectarServidorNoBD } from '@config/db';
 
 const app = express();
+
 conectarServidorNoBD();
 
 app.use(cors());
