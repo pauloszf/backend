@@ -9,7 +9,8 @@
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
     "migration:create": "typeorm-ts-node-commonjs migration:create ./src/shared/typeorm/migrations/",
-    "migration:run": "typeorm-ts-node-commonjs -d ./src/shared/typeorm/data-source.ts migration:run"
+    "migration:run": "typeorm-ts-node-commonjs -d ./src/shared/typeorm/data-source.ts migration:run",
+    "migration:revert": "typeorm-ts-node-commonjs -d ./src/shared/typeorm/data-source.ts migration:revert"
   },
   "keywords": [],
   "author": "",

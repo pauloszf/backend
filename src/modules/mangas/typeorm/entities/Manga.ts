@@ -1,10 +1,14 @@
-import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
+import MangaListMangas from '@modules/mangasList/typeorm/entities/MangaListMangas';
+import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
 
 @Entity('mangas')
 class Manga {
 
   @PrimaryGeneratedColumn('uuid')
   id: String;
+
+  @OneToMany(() => MangaListMangas, mangaListManga => mangaListManga.manga)
+  mangaListManga: MangaListMangas[];
 
   @Column()
   mangaName: String;
