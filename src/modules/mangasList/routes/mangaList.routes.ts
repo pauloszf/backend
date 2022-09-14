@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import MangaListController from '../controllers/MangaListController';
+import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
 
 const mangaListRouter = Router();
 const mangaListController = new MangaListController();
+
+mangaListRouter.use(isAuthenticated);
 
 mangaListRouter.get(
   '/:id',

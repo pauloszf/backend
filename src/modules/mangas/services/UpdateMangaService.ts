@@ -1,3 +1,4 @@
+import RedisCache from "@shared/cache/RedisCache";
 import AppError from "@shared/errors/AppError";
 import { AppDataSource } from "@shared/typeorm/data-source";
 import Manga from "../typeorm/entities/Manga";
@@ -25,6 +26,10 @@ class UpdateMangaService {
     if(mangaExists && mangaName !== manga.mangaName) {
         throw new AppError('There is alredy one manga with this name');
     }
+
+    const redisCache = new RedisCache();
+
+    await redisCache.invalidate('api-MANGA_LIST');
 
     manga.mangaName = mangaName;
     manga.cap = cap;

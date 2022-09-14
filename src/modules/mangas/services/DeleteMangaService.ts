@@ -1,3 +1,4 @@
+import RedisCache from "@shared/cache/RedisCache";
 import AppError from "@shared/errors/AppError";
 import { AppDataSource } from "@shared/typeorm/data-source";
 import Manga from "../typeorm/entities/Manga";
@@ -17,6 +18,10 @@ class DeleteMangaService {
     if(!manga) {
       throw new AppError('Manga not found');
     }
+
+    const redisCache = new RedisCache();
+
+    await redisCache.invalidate('api-MANGA_LIST');
 
     await MangaRepository.remove(manga);
   }

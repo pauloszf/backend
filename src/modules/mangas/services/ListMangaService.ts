@@ -1,14 +1,22 @@
-import { AppDataSource } from "@shared/typeorm/data-source";
 import Manga from "../typeorm/entities/Manga";
 import { MangaRepository } from "../typeorm/repositories/MangaRepository";
-
-
+import RedisCache from "@shared/cache/RedisCache";
 
 class ListMangaService {
   public async execute(): Promise<Manga[]>{
-    const manga = await MangaRepository.find();
+    const redisCache = new RedisCache();
 
-    return manga;
+    let mangas = await redisCache.recover<Manga[]>(
+      'api-MANGA_LIST',
+    );
+
+    if (!mangas) {
+      mangas = await MangaRepository.find();
+
+      await redisCache.save('api-MANGA_LIST', mangas);
+    }
+
+    return mangas;
   }
 }
 

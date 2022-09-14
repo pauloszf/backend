@@ -1,5 +1,5 @@
+import RedisCache from "@shared/cache/RedisCache";
 import AppError from "@shared/errors/AppError";
-import { AppDataSource } from "@shared/typeorm/data-source";
 import Manga from "../typeorm/entities/Manga";
 import { MangaRepository } from "../typeorm/repositories/MangaRepository";
 
@@ -16,10 +16,14 @@ class CreateMangaService {
         throw new AppError('There is alredy one manga with this name');
     }
 
+    const redisCache = new RedisCache();
+
     const manga = MangaRepository.create({
       mangaName,
       cap
     });
+
+    await redisCache.invalidate('api-MANGA_LIST');
 
     await MangaRepository.save(manga);
 

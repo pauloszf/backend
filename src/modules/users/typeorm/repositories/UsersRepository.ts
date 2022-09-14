@@ -8,6 +8,12 @@ export const UsersRepository = AppDataSource.getRepository(User).extend({
       .getOne();
   },
 
+  async findAll() {
+    return await this.createQueryBuilder("user")
+      .take(10)
+      .getMany();
+  },
+
   async findById(id: string){
     return await this.createQueryBuilder("user")
       .where("user.id = :id", {id})
