@@ -27,9 +27,9 @@ class UpdateMangaService {
         throw new AppError('There is alredy one manga with this name');
     }
 
-    const redisCache = new RedisCache();
+    //const redisCache = new RedisCache();
 
-    await redisCache.invalidate('api-MANGA_LIST');
+    await RedisCache.invalidate('api-MANGA_LIST');
 
     manga.mangaName = mangaName;
     manga.cap = cap;

@@ -4,16 +4,16 @@ import RedisCache from "@shared/cache/RedisCache";
 
 class ListMangaService {
   public async execute(): Promise<Manga[]>{
-    const redisCache = new RedisCache();
+    //const redisCache = new RedisCache();
 
-    let mangas = await redisCache.recover<Manga[]>(
+    let mangas = await RedisCache.recover<Manga[]>(
       'api-MANGA_LIST',
     );
 
     if (!mangas) {
       mangas = await MangaRepository.find();
 
-      await redisCache.save('api-MANGA_LIST', mangas);
+      await RedisCache.save('api-MANGA_LIST', mangas);
     }
 
     return mangas;

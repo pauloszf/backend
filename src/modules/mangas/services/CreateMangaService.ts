@@ -16,14 +16,14 @@ class CreateMangaService {
         throw new AppError('There is alredy one manga with this name');
     }
 
-    const redisCache = new RedisCache();
+    //const redisCache = new RedisCache();
 
     const manga = MangaRepository.create({
       mangaName,
       cap
     });
 
-    await redisCache.invalidate('api-MANGA_LIST');
+    await RedisCache.invalidate('api-MANGA_LIST');
 
     await MangaRepository.save(manga);
 

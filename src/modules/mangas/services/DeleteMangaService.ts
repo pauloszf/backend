@@ -19,9 +19,9 @@ class DeleteMangaService {
       throw new AppError('Manga not found');
     }
 
-    const redisCache = new RedisCache();
+    //const redisCache = new RedisCache();
 
-    await redisCache.invalidate('api-MANGA_LIST');
+    await RedisCache.invalidate('api-MANGA_LIST');
 
     await MangaRepository.remove(manga);
   }
